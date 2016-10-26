@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Active Record</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/blood.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,67 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>The Road Ahead</h1>
+					<h3>Making Active Record Your New Best Friend</h3>
+				</section>
+				<section>
+					<h2>Basic Active Record Relationships</h2>
+					<p>one-to-one, one-to-many, many-to-many</p>
+				</section>
+				<section>
+					<section>
+						<h2>One to One</h2>
+						<img src="images/one-to-one.png" class="plain" width="30%" style="float: left;">
+						<ul style="width: 52%;">
+							<li>The table of the belongs_to model contains a column with the foreign key (often id) of the has_one model</li>
+							<li>Not always clear when to use one</li>
+							<li>Users and social media profiles</li>
+							<ul>
+								<li>A user only <span class="syntax-highlight">has_one</span> Facebook profile, and that profile only <span class="syntax-highlight">belongs_to</span> that user</li>
+							</ul>
+						</ul>
+					</section>
+					<section data-markdown>
+						##Examples
+						```
+							class User < ActiveRecord::Base
+								has_one :profile
+								validates :username, presence: true, 
+                             uniqueness: true
+							end
+						```
+						```
+							class Profile < ActiveRecord::Base
+								belongs_to :user
+
+								#validations and other methods would go here
+							end
+						```
+					</section>
+					<section data-markdown>
+						##So When Do I Use It?
+						One indicator: the potential for a lot of empty fields
+						```
+							class CreateProfiles < ActiveRecord::Migration
+								def change
+									create_table :profiles do |t|
+										t.string     :name, null: false
+										t.string     :picture_url
+										t.string     :current_city
+										t.datetime   :birthday
+										t.string     :hometown
+										t.text       :quotes
+										t.belongs_to :user
+
+										t.timestamps
+									end
+									add_index :profiles, :user_id
+								end
+							end
+						```
+					</section>
+				</section>
 			</div>
 		</div>
 
@@ -33,11 +92,9 @@
 		<script src="js/reveal.js"></script>
 
 		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				history: true,
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
