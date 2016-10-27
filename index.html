@@ -29,12 +29,12 @@
 					<h3>Making Active Record Your New Best Friend</h3>
 				</section>
 				<section>
-					<h2>Basic Active Record Relationships</h2>
+					<h3>Basic Active Record Relationships</h3>
 					<p>one-to-one, one-to-many, many-to-many</p>
 				</section>
 				<section>
 					<section>
-						<h2>One to One</h2>
+						<h3>One to One</h3>
 						<img src="images/one-to-one.png" class="plain" width="30%" style="float: left;">
 						<ul style="width: 52%;">
 							<li>The table of the belongs_to model contains a column with the foreign key (often id) of the has_one model</li>
@@ -46,7 +46,7 @@
 						</ul>
 					</section>
 					<section data-markdown>
-						##Examples
+						###Example Models
 						```
 							class User < ActiveRecord::Base
 								has_one :profile
@@ -63,7 +63,7 @@
 						```
 					</section>
 					<section data-markdown>
-						##So When Do I Use It?
+						###So When Do I Use It?
 						One indicator: the potential for a lot of empty fields
 						```
 							class CreateProfiles < ActiveRecord::Migration
@@ -84,6 +84,138 @@
 							end
 						```
 					</section>
+				</section>
+				<section>
+					<section>
+						<h3>One to Many</h3>
+						<ul>
+							<li>Very common</li>
+							<li>Like one to one, the table of the belongs_to model contains a column with the foreign key (often id) of the has_many model</li>
+							<li>Users and orders</li>
+							<ul>
+								<li>A user <span class="syntax-highlight">has_many</span> orders, and each order only <span class="syntax-highlight">belongs_to</span> that user</li>
+							</ul>
+						</ul>
+					</section>
+					<section data-markdown>
+						###Example Models
+						```
+							class User < ActiveRecord::Base
+								has_many :orders
+								has_many :comments
+
+								validates :username, presence:   true,
+								                     uniqueness: true
+								validates :email,    presence:   true,
+								                     uniqueness: true
+							end
+						```
+						```
+							class Order < ActiveRecord::Base
+								belongs_to :user
+
+								validates :address, presence: true
+							end
+						```
+					</section>
+					<section data-markdown>
+						###Example Migration
+						```
+							class CreateOrders < ActiveRecord::Migration
+								def change
+									create_table :orders do |t|
+									  t.string      :address
+									  t.string      :shipping_method
+									  t.datetime    :date_placed
+									  t.belongs_to  :user
+
+									  t.timestamps
+									end
+									add_index :orders, :user_id
+								end
+							end
+						```
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Many to Many</h3>
+						<ul>
+							<li>Also very common</li>
+							<li>Movies and genres</li>
+								<ul>
+									<li>Genres can contain many movies, and those movies can belong to many genres</li>
+								</ul>
+							<li>Join table contains the foreign keys (ids) of what's connected to it</li>
+							<li>Two ways of describing the relationship</li>
+								<ul>
+									<li><span class="syntax-highlight">has_many</span> JOINTABLE & <span class="syntax-highlight">has_many</span> OTHERTABLE through JOINTABLE</li>
+									<li><span class="syntax-highlight">has_and_belongs_to_many</span> (Rails/ActiveRecord magic creates the join table)</li>
+								</ul>
+						</ul>
+					</section>
+					<section data-markdown>
+						###Example Models
+						```
+							class Genre < ActiveRecord::Base
+								has_many :movie_genres
+								has_many :movies, through: :movie_genres
+							end
+						```
+						```
+							class Movie < ActiveRecord::Base
+								has_many :movie_genres
+								has_many :genres, through: :movie_genres
+							end
+						```
+						```
+							class MovieGenre < ActiveRecord::Base
+								belongs_to :genre
+								belongs_to :movie
+							end
+						```
+					</section>
+					<section data-markdown>
+						###When to Use has_and_belongs_to_many
+						```
+							class CreateMovieGenres < ActiveRecord::Migration
+								def change
+									create_table :movie_genres do |t|
+										t.belongs_to :movie
+										t.belongs_to :category
+
+										t.timestamps
+									end
+								end
+							end
+						```
+						When your join table only contains the foreign keys(ids) and no other useful information.
+					</section>
+				</section>
+				<section>
+					<h3>t.what_now?</h3>
+					<ul>
+						<li>t.belongs_to, t.references, and t.integer</li>
+						<ul>
+							<li>Everyone has their own preference, but any of these will work</li>
+							<li><code>t.belongs_to 	<span class="syntax-highlight">:user</span></code></li>
+							<li><code>t.references		<span class="syntax-highlight">:user</span></code></li>
+							<li><code>t.integer  <span class="syntax-highlight">:user_id</span></code></li>
+							<ul>
+								<li>Note: when you use t.integer you need to specify the id because integer just means a number</li>
+								<li>With t.belongs_to or t.references the Rails/ActiveRecord magic can safely assume what you mean</li>
+							</ul>
+						</ul>
+					</ul>
+				</section>
+				<section>
+					<h3>More resources</h3>
+					<ul>
+						<li><a href="http://www.mutuallyhuman.com/blog/2014/06/12/activerecord-associations-and-you/">Active Record Associations and You</a></li>
+						<li><a href="http://guides.rubyonrails.org/association_basics.html">Association Basics</a></li>
+						<li><a href="https://github.com/kdmcclin/schema-practice">Schema Practice</a></li>
+						<li><a href="https://github.com/kdmcclin/chained-relationships">Chained Relationships</a></li>
+					</ul>
 				</section>
 			</div>
 		</div>
