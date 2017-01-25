@@ -29,6 +29,42 @@
 					<h3>Making Active Record Your New Best Friend</h3>
 				</section>
 				<section>
+					<section>
+						<h3>What is Active Record?</h3>
+						<p>Active Record is what's called an object-relational mapper (ORM). In essence it acts as a go between or bridge between your app's objects and the database.</p>
+						<img src="http://i.giphy.com/xTiTnlWeCOmt4eAWeQ.gif" alt="dinosaur bridge">
+					</section>
+					<section>
+						<h3>Why is it useful?</h3>
+						<p>As fun as writing SQL can be, ActiveRecord's special syntax enables you to avoid having to write complicated queries. Instead it translates this syntax into the SQL for you.*</p>
+						<section data-markdown>
+							**Your ActiveRecord command**
+
+							```
+							Person.last 
+
+							```
+							**The resulting SQL command**
+
+							```
+							SELECT  `people`.* FROM `people`  ORDER BY `people`.`id` DESC LIMIT 1
+							```
+						</section>
+						<small>*You can still write SQL with ActiveRecord if you want or need to.</small>
+					</section>
+					<section>
+						<h3>How do I use it in my Rails app?</h3>
+						<ul>
+							<li>ActiveRecord is a gem that is included by default when you create a new Rails project</li>
+							<li>In order to set up the connections between different tables in the app's database, you need to specify relationships</li>
+							<ul>
+								<li>You do this in your model and migration files</li>
+							</ul>
+							<li>These relationships enable you to use ActiveRecord to access say, the orders of a particular user, or even a more complex query like totalling up the profit made on orders where the product had the word "green" in its title somewhere</li>
+						</ul>
+					</section>
+				</section>
+				<section>
 					<h3>Basic Active Record Relationships</h3>
 					<p>one-to-one, one-to-many, many-to-many</p>
 				</section>
