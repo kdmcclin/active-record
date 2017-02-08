@@ -138,6 +138,68 @@
 							end
 						```
 					</section>
+					<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Profiles Table</h4>
+					  <table>
+					  	<tr>
+					  		<th>Id</th>
+					      <th>Name</th>
+					      <th>Picture Url</th>
+					      <th>Birthday</th>
+					      <th>User Id</th>
+					    </tr>
+					    <tr>
+					    	<td>1</td>
+					      <td>Katherine</td>
+					      <td>http://placehold.it/350x150</td>
+					      <td>"2016-05-06 07:16:22"</td>
+					      <td>5812</td>
+					    </tr>
+					    <tr>
+					    	<td>2</td>
+					      <td>Darrell</td>
+					      <td>http://placehold.it/350x150</td>
+					      <td>"2016-05-06 07:16:22"</td>
+					      <td>8032</td>
+					    </tr>
+					    <tr>
+					    	<td>3</td>
+					      <td>Travis</td>
+					      <td>http://placehold.it/350x150</td>
+					      <td>"2016-05-06 07:16:22"</td>
+					      <td>45678</td>
+					    </tr>
+					  </table>
+					</section>
+					<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Users Table</h4>
+					  <table>
+					  	<tr>
+					      <th>Id</th>
+					      <th>Username</th>
+					      <th>Password</th>
+					    </tr>
+					    <tr>
+					    	<td>5812</td>
+					      <td>katherine1234</td>
+					      <td>#awesomefakepassword#</td>
+					    </tr>
+					    <tr>
+					    	<td>8032</td>
+					      <td>darrell1234</td>
+								<td>#awesomefakepassword#</td>
+					    </tr>
+					    <tr>
+					    	<td>45678</td>
+					      <td>travis1234</td>
+								<td>#awesomefakepassword#</td>
+					    </tr>
+					  </table>
+  				</section>
 				</section>
 				<section>
 					<section>
@@ -168,7 +230,7 @@
 							class Order < ActiveRecord::Base
 								belongs_to :user
 
-								validates :address, presence: true
+								validates :confirmation_number, presence: true
 							end
 						```
 					</section>
@@ -178,7 +240,7 @@
 							class CreateOrders < ActiveRecord::Migration
 								def change
 									create_table :orders do |t|
-									  t.string      :address
+									  t.string      :confirmation_number
 									  t.string      :shipping_method
 									  t.datetime    :date_placed
 									  t.belongs_to  :user
@@ -190,6 +252,62 @@
 							end
 						```
 					</section>
+					<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Users Table</h4>
+					  <table>
+					  	<tr>
+					      <th>Id</th>
+					      <th>Username</th>
+					      <th>Email</th>
+					      <th>Password</th>
+					    </tr>
+					    <tr>
+					    	<td>4923</td>
+					      <td>katherine1234</td>
+					      <td>katherine@example.com</td>
+					      <td>#awesomefakepassword#</td>
+					    </tr>
+					    <tr>
+					    	<td>6538</td>
+					      <td>darrell1234</td>
+					      <td>darrell@example.com</td>
+								<td>#awesomefakepassword#</td>
+					    </tr>
+					    <tr>
+					    	<td>92304</td>
+					      <td>travis1234</td>
+					      <td>travis@example.com</td>
+								<td>#awesomefakepassword#</td>
+					    </tr>
+					  </table>
+  				</section>
+  				<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Orders Table</h4>
+					  <table>
+					  	<tr>
+					      <th>Id</th>
+					      <th>Confirmation Number</th>
+					      <th>Shipping Method</th>
+					      <th>User Id</th>
+					    </tr>
+					    <tr>
+					    	<td>1</td>
+					    	<td>CA11TKA201</td>
+					    	<td>1 Day</td>
+					    	<td>4923</td>
+					    </tr>
+					    <tr>
+					    	<td>2</td>
+					    	<td>KF22BNA571</td>
+					    	<td>Ground</td>
+					    	<td>92304</td>
+					    </tr>
+					  </table>
+  				</section>
 				</section>
 				<section>
 					<section>
@@ -245,6 +363,79 @@
 						```
 						When your join table only contains the foreign keys(ids) and no other useful information.
 					</section>
+					<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Genres Table</h4>
+					  <table>
+					  	<tr>
+					  		<th>Id</th>
+					  		<th>Name</th>
+					    </tr>
+					    <tr>
+					    	<td>1</td>
+					    	<td>Animation</td>
+					    </tr>
+					    <tr>
+					    	<td>2</td>
+					    	<td>Kids</td>
+					    </tr>
+					    <tr>
+					    	<td>3</td>
+					    	<td>Documentary</td>
+					    </tr>
+					  </table>
+  				</section>
+  				<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Movies Table</h4>
+					  <table>
+					  	<tr>
+					  		<th>Id</th>
+					  		<th>Title</th>
+					    </tr>
+					    <tr>
+					    	<td>1</td>
+					    	<td>Zootopia</td>
+					    </tr>
+					    <tr>
+					    	<td>2</td>
+					    	<td>13th</td>
+					    </tr>
+					    <tr>
+					    	<td>3</td>
+					    	<td>How to Train Your Dragon</td>
+					    </tr>
+					  </table>
+  				</section>
+  				<section>
+						<h3>Think of it Like a Spreadsheet</h3>
+						<br>
+						<h4>Movie Genres Table</h4>
+					  <table>
+					  	<tr>
+					  		<th>Id</th>
+					  		<th>Movie Id</th>
+					  		<th>Genre Id</th>
+					    </tr>
+					    <tr>
+					    	<td>1</td>
+					    	<td>2</td>
+					    	<td>3</td>
+					    </tr>
+					    <tr>
+					    	<td>2</td>
+					    	<td>1</td>
+					    	<td>1</td>
+					    </tr>
+					    <tr>
+					    	<td>3</td>
+					    	<td>1</td>
+					    	<td>2</td>
+					    </tr>
+					  </table>
+  				</section>
 				</section>
 				<section>
 					<h3>t.what_now?</h3>
