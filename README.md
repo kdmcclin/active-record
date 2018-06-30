@@ -1,4 +1,4 @@
-#Intro to Active Record
+# Intro to Active Record
 
 This talk was created for the Ruby on Rails group of Women Who Code DC.
 
